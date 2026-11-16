@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="LiteRoam finds lesser-known places to eat, visit and do, using very little data.">
+  <title>LiteRoam – low-data travel discovery</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skip" href="#results">Skip to results</a>
+
+  <header class="top">
+    <div>
+      <h1>LiteRoam</h1>
+      <p class="tagline">Discover Lesser-known places nearby.</p>
+    </div>
+    <div class="badges">
+      <!-- HCI 1: Visibility of system status -->
+      <span id="net" class="badge" role="status">Online</span>
+      <span id="data" class="badge" title="Approximate data downloaded this session">Data: 0 KB</span>
+    </div>
+  </header>
+
+  <main>
+    <section class="search" aria-labelledby="find-h">
+      <h2 id="find-h" class="sr-only">Find places</h2>
+
+      <!-- HCI 7: one primary action, big target -->
+      <button id="locate" type="button" class="primary">Use my location</button>
+      <p class="or" aria-hidden="true">or</p>
+
+      <form id="form" autocomplete="off" novalidate>
+        <label for="place">Type a town or village</label>
+        <div class="row">
+          <input id="place" name="place" type="text" inputmode="search" enterkeyhint="search" placeholder="e.g. Wolfville" maxlength="80">
+          <button id="go" type="submit" class="secondary" disabled>Search</button>
+        </div>
+      </form>
+
+      <div class="row opts">
+        <label for="radius">Search distance</label>
+        <select id="radius">
+          <option value="500">500 m</option>
+          <option value="1000">1 km</option>
+          <option value="2000" selected>2 km</option>
+          <option value="5000">5 km</option>
+          <option value="10000">10 km</option>
+        </select>
+      </div>
+
+      <!-- HCI 5: recognition over recall -->
+      <div id="recent-wrap" hidden>
+        <p class="small">Recent searches</p>
+        <div id="recent" class="chips"></div>
+      </div>
+    </section>
+
+    <!-- HCI 1 + 4: status, errors, retry, cancel all appear here -->
+    <div id="status" class="status" role="status" aria-live="polite">
+      <p>Share your location or type a town to start.</p>
+    </div>
+
+    <nav class="controls" aria-label="Results controls">
+      <!-- HCI 7: only three categories (plus All) -->
+      <div id="cats" class="chips" role="group" aria-label="Category">
+        <button type="button" data-cat="all" aria-pressed="true">All</button>
+        <button type="button" data-cat="eat" aria-pressed="false">Eat</button>
+        <button type="button" data-cat="visit" aria-pressed="false">Visit</button>
+        <button type="button" data-cat="do" aria-pressed="false">Do</button>
+      </div>
+      <div id="views" class="chips" role="group" aria-label="View">
+        <button type="button" data-view="nearby" aria-pressed="true">Nearby</button>
+        <button type="button" data-view="saved" aria-pressed="false">Saved (<span id="saved-n">0</span>)</button>
+      </div>
+    </nav>
+
+    <ul id="results" class="cards" tabindex="-1" aria-label="Places"></ul>
+    <p id="note" class="small note"></p>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+  <footer>
+    <p class="small">Place data © OpenStreetMap contributors.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
